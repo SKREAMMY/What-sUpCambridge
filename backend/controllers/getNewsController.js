@@ -1,5 +1,169 @@
-const { spawn, spawnSync } = require("child_process");
+const { spawn } = require("child_process");
 const fs = require("fs");
+const cronjob = require('node-cron')
+
+// const sys = require('sys')
+
+const LocalBBC = require("../models/localNewsBBCModel");
+const GlobalBBC = require("../models/globalNewsBBCModel");
+const GlobalWorldBBC = require("../models/globalWorld");
+
+var response = []
+
+cronjob.schedule(" */30 * * * *", () => {
+
+
+
+    async function getLocalBBCNewsFunction() {
+
+
+        console.log("getting bcci news ");
+        const pythonscript = await spawn('python', ['./scripts/bbci.py']);
+
+        pythonscript.stdout.on("data", (data) => {
+            console.log('Piping bcci news ...');
+            console.log(`data for stdout bcc ${data}`);
+
+            async function readfile() {
+                global.bccidata = await fs.promises.readFile('./newsJSON/bcci.json', { encoding: 'utf-8' })
+                console.log("filecontent ", global.bccidata);
+                //  = filecontent;
+            }
+            // console.log("file read for bcci ", global.bccidata);
+
+
+            readfile();
+
+
+
+
+
+        })
+
+        pythonscript.stderr.on('data', (data) => {
+            console.log(` data for stderr + ${data}`);
+        })
+
+        pythonscript.on('close', () => {
+            console.log("closed bcci");
+        })
+
+        // console.log({ bccidata });
+
+    }
+
+    async function getLocalNewsfunction() {
+
+        await LocalBBC.collection.drop();
+
+        const python = await spawn('python', ['./scripts/cambridge-news.py']);
+
+        // sys.stdout.flush()
+        python.stdout.on('data', (data) => {
+            let data_received = JSON.parse(`${data}`)
+            console.log(typeof (data_received));
+            console.log(data_received["data"].length);
+            data_received["data"].map(async (d, index) => {
+
+                await LocalBBC.create(d).then((response) => {
+                    console.log("created");
+                    console.log("added ", index, " ", d);
+
+                }).catch((err) => {
+                    console.log("unable to add the data");
+                });
+
+            })
+
+
+
+        })
+
+
+
+        python.stderr.on('data', (data) => {
+            console.log(` data for stderr + ${data}`);
+        })
+
+        python.on('close', () => {
+            console.log("closed cbn");
+        })
+
+
+    }
+
+
+    getLocalNewsfunction();
+    // getLocalBBCNewsFunction();
+
+
+})
+
+cronjob.schedule(" */5 * * * *", () => {
+
+    async function getTopStoriesBBC() {
+
+        await GlobalBBC.collection.drop();
+        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/rss.xml"]);
+        python.stdout.on('data', (data) => {
+            console.log('Pipe data from python script ...');
+            // console.log(`data for stdout + ${data}`);
+            data_received = JSON.parse(`${data}`);
+            data_received["data"].map(async (d, index) => {
+
+                await GlobalBBC.create(d).then((response) => {
+                    console.log("created top stories");
+                    // console.log("added ", index, " ", d);
+
+                }).catch((err) => {
+                    console.log("unable to add the data");
+                });
+
+            })
+
+        })
+
+        python.stderr.on('data', (data) => {
+            console.log(` data for stderr + ${data}`);
+        })
+    }
+
+    getTopStoriesBBC();
+
+})
+
+cronjob.schedule(" */5 * * * *", () => {
+
+    async function getGlobalWorldBBC() {
+
+        await GlobalWorldBBC.collection.drop();
+        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
+        python.stdout.on('data', (data) => {
+            console.log('Pipe data from python script ...');
+            // console.log(`data for stdout + ${data}`);
+            data_received = JSON.parse(`${data}`);
+            data_received["data"].map(async (d, index) => {
+
+                await GlobalBBC.create(d).then((response) => {
+                    console.log("created top stories");
+                    // console.log("added ", index, " ", d);
+
+                }).catch((err) => {
+                    console.log("unable to add the data");
+                });
+
+            })
+
+        })
+
+        python.stderr.on('data', (data) => {
+            console.log(` data for stderr + ${data}`);
+        })
+    }
+
+    getGlobalWorldBBC();
+
+})
 
 
 getGlobalNews = async (req, res, next) => {
@@ -7,68 +171,56 @@ getGlobalNews = async (req, res, next) => {
 
 
 
-    // console.log("Inside local");
-    let datatosend;
-    const python = await spawn('python', ['./scripts/bbci.py']);
-    python.stdout.on('data', (data) => {
-        console.log('Pipe data from python script ...');
-        console.log(`data for stdout + ${data}`);
-    })
+    // console.log("Inside global news");
+    let urlForRssXml, data_received;
+    let resultdata;
+    console.log(req.params["newsType"]);
+    switch (req.params["newsType"]) {
+        case "topStories":
+            urlForRssXml = "https://feeds.bbci.co.uk/news/rss.xml";
+            resultdata = await GlobalBBC.find({});
+            console.log(urlForRssXml);
 
-    python.stderr.on('data', (data) => {
-        console.log(` data for stderr + ${data}`);
-    })
+            break;
+
+        default:
+            console.log("no such route");
+            break;
 
 
-    fs.readFile('./newsJSON/bcci.json', 'utf-8', (err, data) => {
-        datatosend = JSON.parse(data);
-        res.status(200).json({ success: true, data: datatosend });
-    })
+    }
+
+    res.status(200).json({ success: true, data: resultdata })
+
+
+
+
+
+
+    // fs.readFile('./newsJSON/bcci.json', 'utf-8', (err, data) => {
+    //     datatosend = JSON.parse(data);
+    //     res.status(200).json({ success: true, data: datatosend });
+    // })
+
 
 
 }
 
 getLocalNews = async (req, res, next) => {
-    let cambridgeshiredata, bccidata;
 
-    console.log("getting local news");
+    // let result
+    // try {
+    //     result = LocalBBC.find({});
 
-    const python = await spawn('python', ['./scripts/cambridge-news.py']);
-    // setInterval(() => {
+    // } catch (err) {
+    //     console.log(err);
+    // }
 
-    // }, 3000)
-    // console.log(python);
-    python.stdout.on('data', (data) => {
-        console.log('Piping cambridge news ...');
-        console.log(`data for stdout cbn ${data}`);
-    })
-
-    python.stderr.on('data', (data) => {
-        console.log(` data for stderr + ${data}`);
-    })
-
-    fs.readFile('./newsJSON/cambridge-news.json', 'utf-8', (err, data) => {
-        cambridgeshiredata = JSON.parse(data);
-        res.status(200).json({ success: true, data: cambridgeshiredata });
-    })
-
-    // const python1 = await spawn('python', ['./scripts/bbci.py']);
-    // python1.stdout.on('data', (data) => {
-    //     console.log('Piping bbci ');
-    //     console.log(`data for stdout bbc ${data}`);
-    // })
-
-    // python1.stderr.on('data', (data) => {
-    //     console.log(` data for stderr + ${data}`);
-    // })
+    const resultdata = await LocalBBC.find({});
+    // console.log({ resultdata });
 
 
-    // fs.readFile('./newsJSON/bcci.json', 'utf-8', (err, data) => {
-    //     bccidata = JSON.parse(data);
-    // })
-
-
-    // res.status(200).json({ success: false, cambridgeshiredata: cambridgeshiredata });
+    res.status(200).json({ success: true, data: resultdata });
 
 
 }

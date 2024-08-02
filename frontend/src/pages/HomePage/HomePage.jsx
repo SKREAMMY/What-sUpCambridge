@@ -50,7 +50,7 @@ const HomePage = () => {
           role="tabpanel"
           aria-labelledby="nav-profile-tab"
         >
-          {/* <GlobalNews /> */}
+          <GlobalNews />
         </div>
       </div>
     </div>

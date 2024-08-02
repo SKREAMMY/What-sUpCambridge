@@ -15,7 +15,9 @@ const getLocalNewsMiddleware = (req, res, next) => {
 }
 
 router.route("/global").get(GlobalNewsMiddleware, getGlobalNews);
+router.route("/global/:newsType").get(GlobalNewsMiddleware, getGlobalNews);
 router.route("/local").get(getLocalNewsMiddleware, getLocalNews);
+
 
 
 

@@ -6,6 +6,7 @@ const LocalNews = () => {
 
   useEffect(() => {
     async function getLocalNewsFunction() {
+      console.log("inside local ");
       await fetch("http://localhost:5000/news/local")
         .then((response) => {
           if (response.ok) {
@@ -13,11 +14,12 @@ const LocalNews = () => {
           }
         })
         .then((json) => {
-          setlocalNews(json.cambridgeshiredata);
+          console.log(json);
+          setlocalNews(json.data);
 
-          setInterval(() => {}, 2000);
-          // setlocalNews(localNews.shift());
-          console.log(localNews);
+          // setInterval(() => {}, 2000);
+          // // setlocalNews(localNews.shift());
+          // console.log(localNews);
         });
     }
     getLocalNewsFunction();

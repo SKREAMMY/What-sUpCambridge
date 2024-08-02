@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from "react";
+import TopStories from "./TopStoriesComponent/TopStories";
+import WorldComponent from "./WorldComponent/World";
+import World from "./WorldComponent/World";
 
 const GlobalNews = () => {
   const [globalNews, setGlobalNews] = useState([]);
 
   useEffect(() => {
+    console.log("calling global");
     async function fetchGlobalNews() {
-      await fetch("http://localhost:5000/news/global")
+      await fetch("http://localhost:5000/news/global/topStories")
         .then((response) => {
           if (response.ok) {
             return response.json();
           }
         })
         .then((json) => {
-          setGlobalNews(json.data);
-          console.log(globalNews);
+          // setGlobalNews(json.data);
+          console.log("global news setup", globalNews);
         });
     }
 
@@ -114,71 +118,7 @@ const GlobalNews = () => {
           role="tabpanel"
           aria-labelledby="pills-home-tab"
         >
-          <div className="row">
-            <div className="col-sm-12 col-md-12 col-lg-6">
-              <div className="card">
-                <div className="card-horizontal row d-flex flex-row">
-                  <div className="col-sm-12 col-md-6 col-lg-6">
-                    <div className="img-square-wrapper">
-                      <img src="" alt="" />
-                    </div>
-                  </div>
-                  <div className="col-sm-12 col-md-6 col-lg-6">
-                    <div className="card-body">
-                      <h4 className="card-title">Title</h4>
-                      <p className="card-text">Description</p>
-                      <a href="#" className="btn btn-primary">
-                        BUTTON
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="w-100"></div>
-                <div className="card-footer w-100 text-muted">
-                  Footer stating cats are CUTE little animals
-                </div>
-              </div>
-            </div>
-            <div className="col-sm-12 col-md-12 col-lg-6">
-              <div className="card">
-                <div className="card-horizontal row d-flex flex-row">
-                  <div className="col-sm-12 col-md-6 col-lg-6">
-                    <div className="img-square-wrapper">
-                      <img src="" alt="" />
-                    </div>
-                  </div>
-                  <div className="col-sm-12 col-md-6 col-lg-6">
-                    <div className="card-body">
-                      <h4 className="card-title">Title</h4>
-                      <p className="card-text">Description</p>
-                      <a href="#" className="btn btn-primary">
-                        BUTTON
-                      </a>
-                    </div>
-                  </div>
-                </div>
-
-                <div className="w-100"></div>
-                <div className="card-footer w-100 text-muted">
-                  Footer stating cats are CUTE little animals
-                </div>
-              </div>
-            </div>
-            {/* <div className="col-sm-12 col-md-3 col-lg-2">
-              <a href="#">Sample links for the next news</a>
-              <hr />
-              <a href="#">Sample links for the next news</a>
-              <hr />
-              <a href="#">Sample links for the next news</a>
-              <hr />
-              <a href="#">Sample links for the next news</a>
-              <hr />
-              <a href="#">Sample links for the next news</a>
-              <hr />
-              <a href="#">Sample links for the next news</a>
-            </div> */}
-          </div>
+          <TopStories />
         </div>
         <div
           className="tab-pane fade"
@@ -186,7 +126,7 @@ const GlobalNews = () => {
           role="tabpanel"
           aria-labelledby="pills-profile-tab"
         >
-          World
+          <World />
         </div>
         <div
           className="tab-pane fade"

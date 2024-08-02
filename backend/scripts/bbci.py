@@ -11,7 +11,7 @@ for item in response["rss"]["channel"]["item"]:
 
     bcci_json.append(item)
 
-# print(bcci_json)
+print(bcci_json, flush=True)
 
 
 with open("./newsJSON/bcci.json", "w") as outfile:

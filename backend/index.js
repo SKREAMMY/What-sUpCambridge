@@ -22,9 +22,11 @@ app.use(cors())
 
 const news = require("./routes/getNews");
 const movies = require("./routes/getMovies");
+const links = require("./routes/getLinks");
 
 app.use("/news", news);
 app.use("/movies", movies);
+app.use("/links", links);
 
 
 app.post("/api/products", async (req, res) => {

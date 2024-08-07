@@ -10,7 +10,7 @@ const GlobalWorldBBC = require("../models/globalWorld");
 
 var response = []
 
-cronjob.schedule(" */30 * * * *", () => {
+cronjob.schedule(" 0 0 0 * * *", () => {
 
 
 
@@ -20,9 +20,11 @@ cronjob.schedule(" */30 * * * *", () => {
         console.log("getting bcci news ");
         const pythonscript = await spawn('python', ['./scripts/bbci.py']);
 
+        let chuncks = []
         pythonscript.stdout.on("data", (data) => {
-            console.log('Piping bcci news ...');
-            console.log(`data for stdout bcc ${data}`);
+            // console.log('Piping bcci news ...');
+            // console.log(`data for stdout bcc ${data}`);
+            chuncks.push(data);
 
             async function readfile() {
                 global.bccidata = await fs.promises.readFile('./newsJSON/bcci.json', { encoding: 'utf-8' })
@@ -59,21 +61,25 @@ cronjob.schedule(" */30 * * * *", () => {
         const python = await spawn('python', ['./scripts/cambridge-news.py']);
 
         // sys.stdout.flush()
+        let chuncks = []
         python.stdout.on('data', (data) => {
-            let data_received = JSON.parse(`${data}`)
-            console.log(typeof (data_received));
-            console.log(data_received["data"].length);
-            data_received["data"].map(async (d, index) => {
+            // let data_received = JSON.parse(`${data}`)
+            // console.log("local news kp ", data_received);
 
-                await LocalBBC.create(d).then((response) => {
-                    console.log("created");
-                    console.log("added ", index, " ", d);
+            // console.log(data_received["data"].length);
 
-                }).catch((err) => {
-                    console.log("unable to add the data");
-                });
+            chuncks.push(data);
+            // data_received["data"].map(async (d, index) => {
 
-            })
+            //     await LocalBBC.create(d).then((response) => {
+            //         console.log("created");
+            //         console.log("added ", index, " ", d);
+
+            //     }).catch((err) => {
+            //         console.log("unable to add the data");
+            //     });
+
+            // })
 
 
 
@@ -86,6 +92,20 @@ cronjob.schedule(" */30 * * * *", () => {
         })
 
         python.on('close', () => {
+            let data = Buffer.concat(chuncks);
+            let result = JSON.parse(data);
+            console.log("finally data is  ", result);
+            result["data"].map(async (d, index) => {
+
+                await LocalBBC.create(d).then((response) => {
+                    console.log("created");
+                    console.log("added ", index, " ", d);
+
+                }).catch((err) => {
+                    console.log("unable to add the data");
+                });
+
+            })
             console.log("closed cbn");
         })
 

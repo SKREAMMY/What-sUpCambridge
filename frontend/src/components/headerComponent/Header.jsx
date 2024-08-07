@@ -106,8 +106,8 @@ const Header = () => {
                         align-items-left 
                         justify-content-center"
             >
-              <button className="btn btn-info loginButton">Login</button>
-              <button className="btn btn-success signUpButton">Sign Up</button>
+              {/* <button className="btn btn-info loginButton">Login</button>
+              <button className="btn btn-success signUpButton">Sign Up</button> */}
               <div className="d-flex align-items-center weather">
                 <img
                   className="weather_icon"

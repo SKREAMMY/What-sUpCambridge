@@ -2,3 +2,44 @@
     align-items: center;
 
 }
+
+.movie-card {
+    width: 18rem;
+    background-color: rgb(183, 201, 126);
+    border-radius: 10px;
+    padding-top: 10px;
+    height: 480px;
+    cursor: pointer;
+
+}
+
+.card-body {
+    font-size: 20px;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    /* font-family: fantasy; */
+
+}
+
+.movie-image {
+    width: 280px;
+    height: 400px;
+
+}
+
+.movie-image-modal {
+    width: 240px;
+    height: 350px;
+
+}
+
+.vuedatacard {
+    margin: 20px;
+}
+
+.bookingbutton {
+    width: 100%;
+    align-items: center;
+    justify-content: center;
+}

@@ -3,6 +3,16 @@ import requests
 import xmltodict
 from datetime import date
 
+import datetime
+
+
+def convertDate(d):
+    new_date = datetime.datetime.strptime(d, "%Y-%m-%dT%H:%M:%S")
+    return new_date.date().strftime("%d %b")
+
+
+# print(convertDate("2019-12-23T00:00:00"))
+
 # raw_data = requests.get("https://www.myvue.com/api/microservice/showings/films")
 # # print(raw_data.content)
 
@@ -37,9 +47,11 @@ d = session.get("https://www.myvue.com")
 # )
 
 timing = str(date.today())
-endpoint = "https://www.myvue.com/api/microservice/showings/cinemas/10016/films"
+endpoint = "https://www.myvue.com/api/microservice/showings/cinemas/10016/films?minEmbargoLevel=3&includesSession=true&includeSessionAttributes=true"
 
 # print(endpoint)
+
+# https://www.myvue.com/api/microservice/showings/cinemas/10016/films?showingDate=2024-08-02T00:00:00&minEmbargoLevel=3&includesSession=true&includeSessionAttributes=true
 
 
 # print("I got ", d)
@@ -62,10 +74,17 @@ if response.ok:
         movie_details["synopsisShort"] = content["synopsisShort"]
         movie_details["director"] = content["director"]
         movie_details["filmUrl"] = content["filmUrl"]
+        movie_details["posterImageSrc"] = content["posterImageSrc"]
+        movie_details["sessions"] = {}
 
+        movie_sessions = []
         for datas in content["showingGroups"]:
-            movie_sessions = []
+
+            # movie_by_date[convertDate(datas["date"])]
+            # convertDate(datas["date"])
+
             for data in datas["sessions"]:
+
                 movie_session_details = {}
                 movie_details["duration"] = data["duration"]
                 movie_session_details["startTime"] = data["startTime"]
@@ -73,17 +92,22 @@ if response.ok:
                 movie_session_details["Tickets available"] = data["isSoldOut"]
                 movie_session_details["bookingUrl"] = vue_url + data["bookingUrl"]
                 movie_session_details["screenName"] = data["screenName"]
+                movie_session_details["dateofShow"] = data["showTimeWithTimeZone"]
                 movie_sessions.append(movie_session_details)
                 movie_session_details = {}
-            movie_details["sessions"] = movie_sessions
-        # print(movie_details)
+
+            movie_details["sessions"][convertDate(datas["date"])] = movie_sessions
 
         vue_movieList["data"].append(movie_details)
 
         movie_details = {}
 
+    # print(len(vue_movieList))
     vue_movie_json = json.dumps(vue_movieList)
+
     print(vue_movie_json, flush=True)
+    # with open("test.json", "w") as wf:
+    #     json.dump(vue_movieList, wf)
 
 else:
     print({}, flush=True)

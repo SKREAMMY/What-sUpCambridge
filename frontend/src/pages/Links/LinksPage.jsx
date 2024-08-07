@@ -84,6 +84,7 @@ const LinksPage = () => {
                 <i className="fa fa-trash fa-bounce icon"></i>
                 {/* <h2>Bin Collection Dates</h2> */}
                 <a
+                  target="_blank"
                   href="https://www.cambridge.gov.uk/check-when-your-bin-will-be-emptied"
                   style={{ fontStyle: "italic" }}
                 >
@@ -99,6 +100,7 @@ const LinksPage = () => {
               <div className="card-body d-flex flex-column bin-body">
                 <i className="fa fa-file icon"></i>
                 <a
+                  target="_blank"
                   href="https://www.cambridge.gov.uk/manage-your-council-tax-account-and-check-your-bill"
                   style={{ fontStyle: "italic" }}
                 >
@@ -114,6 +116,7 @@ const LinksPage = () => {
               <div className="card-body d-flex flex-column bin-body">
                 <i className="fa fa-car icon"></i>
                 <a
+                  target="_blank"
                   href="https://www.cambridge.gov.uk/parking"
                   style={{ fontStyle: "italic" }}
                 >
@@ -129,6 +132,7 @@ const LinksPage = () => {
               <div className="card-body d-flex flex-column bin-body">
                 <i className="fa fa-flag icon"></i>
                 <a
+                  target="_blank"
                   href="https://www.cambridge.gov.uk/report-it"
                   style={{ fontStyle: "italic" }}
                 >
@@ -144,6 +148,7 @@ const LinksPage = () => {
               <div className="card-body d-flex flex-column bin-body">
                 <i className="fa fa-money icon"></i>
                 <a
+                  target="_blank"
                   href="https://ip.e-paycapita.com/AIP/itemSelectionPage.do?link=showItemSelectionPage&siteId=85&languageCode=EN&source=AIP"
                   style={{ fontStyle: "italic" }}
                 >
@@ -159,6 +164,7 @@ const LinksPage = () => {
               <div className="card-body d-flex flex-column bin-body">
                 <i className="fa fa-list icon"></i>
                 <a
+                  target="_blank"
                   href="https://applications.greatercambridgeplanning.org/online-applications/"
                   style={{ fontStyle: "italic" }}
                 >

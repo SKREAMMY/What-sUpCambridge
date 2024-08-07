@@ -43,3 +43,11 @@
     align-items: center;
     justify-content: center;
 }
+
+.movietype {
+    margin: 20px;
+}
+
+.movies {
+    padding-bottom: 50px;
+}

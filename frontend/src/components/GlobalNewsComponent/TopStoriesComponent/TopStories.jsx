@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from "react";
 // const cronjob = require("node-cron");
+import "./TopStories.css";
 
 const TopStories = () => {
   const [topStories, setTopStories] = useState([]);
@@ -35,10 +36,12 @@ const TopStories = () => {
                 <div className="col-sm-12 col-md-12 col-lg-6">
                   <div className="card">
                     <div className="card-horizontal row d-flex flex-row">
-                      <div className="col-sm-12 col-md-6 col-lg-6">
-                        <div className="img-square-wrapper">
-                          <img src={news.mediaThumbnail?.url} alt="" />
-                        </div>
+                      <div className="col-sm-12 col-md-6 col-lg-6 img-square-wrapper">
+                        <img
+                          className="imagesizing"
+                          src={news.mediaThumbnail?.url}
+                          alt=""
+                        />
                       </div>
                       <div className="col-sm-12 col-md-6 col-lg-6">
                         <div className="card-body">
@@ -49,11 +52,6 @@ const TopStories = () => {
                           </a>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="w-100"></div>
-                    <div className="card-footer w-100 text-muted">
-                      Footer stating cats are CUTE little animals
                     </div>
                   </div>
                 </div>

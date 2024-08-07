@@ -27,6 +27,10 @@ const Header = () => {
     }
   };
 
+  const handleEvent = (e) => {
+    console.log(e);
+  };
+
   useEffect(() => {
     //Initial call to get the weather status while loading the page
     getWeather();
@@ -93,6 +97,7 @@ const Header = () => {
                   type="text"
                   className="form-control"
                   placeholder="Search here..."
+                  onChange={(e) => handleEvent(e.target.value)}
                 />
                 <div className="input-group-append search">
                   <button id="search_btn" className="btn ">

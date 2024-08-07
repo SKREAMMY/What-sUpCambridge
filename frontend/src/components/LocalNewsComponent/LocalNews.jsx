@@ -25,7 +25,7 @@ const LocalNews = () => {
     getLocalNewsFunction();
   }, []);
   return (
-    <div className="LocalNews">
+    <div className="container-fluid LocalNews">
       <div className="row">
         <div className="col-sm-12 col-md-8 col-lg-10">
           {/* <div className="card-group">
@@ -84,16 +84,18 @@ const LocalNews = () => {
             </div>
           </div> */}
 
-          <div className="row">
+          <div className="row alignCards">
             {localNews.map((news) => (
               <>
                 <div className="col-sm-12 col-md-12 col-lg-6">
-                  <div className="card">
-                    <div className="card-horizontal row d-flex flex-row">
-                      <div className="col-sm-12 col-md-6 col-lg-6">
-                        <div className="img-square-wrapper">
-                          <img src={news.enclosure?.["@url"]} alt="" />
-                        </div>
+                  <div className="card localNewsCard">
+                    <div className="card-horizontal row d-flex flex-row alignment">
+                      <div className="col-sm-12 col-md-6 col-lg-6 img-square-wrapper">
+                        <img
+                          src={news.enclosure?.["@url"]}
+                          className="localNewsImage"
+                          alt=""
+                        />
                       </div>
                       <div className="col-sm-12 col-md-6 col-lg-6">
                         <div className="card-body">
@@ -104,11 +106,6 @@ const LocalNews = () => {
                           </a>
                         </div>
                       </div>
-                    </div>
-
-                    <div className="w-100"></div>
-                    <div className="card-footer w-100 text-muted">
-                      Footer stating cats are CUTE little animals
                     </div>
                   </div>
                 </div>

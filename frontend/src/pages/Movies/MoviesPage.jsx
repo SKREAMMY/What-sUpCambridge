@@ -73,10 +73,10 @@ const MoviesPage = () => {
   return (
     <>
       <div className="movietype d-flex flex-row">
-        <div>Choose the Cinema Hall</div>
+        <div>Choose the Cinema Hall &nbsp;</div>
         <div className="dropdown">
           <button
-            className="btn btn-outline dropdown-toggle"
+            className="btn btn-secondary dropdown-toggle"
             type="button"
             id="dropdownMenuButton"
             data-bs-toggle="dropdown"

@@ -63,26 +63,8 @@ cronjob.schedule("0 0 0 * * *", () => {
         // sys.stdout.flush()
         let chuncks = []
         python.stdout.on('data', (data) => {
-            // let data_received = JSON.parse(`${data}`)
-            // console.log("local news kp ", data_received);
-
-            // console.log(data_received["data"].length);
 
             chuncks.push(data);
-            // data_received["data"].map(async (d, index) => {
-
-            //     await LocalBBC.create(d).then((response) => {
-            //         console.log("created");
-            //         console.log("added ", index, " ", d);
-
-            //     }).catch((err) => {
-            //         console.log("unable to add the data");
-            //     });
-
-            // })
-
-
-
         })
 
 
@@ -119,32 +101,41 @@ cronjob.schedule("0 0 0 * * *", () => {
 
 })
 
-cronjob.schedule(" */5 * * * *", () => {
+cronjob.schedule(" 0 0 0 * * *", () => {
 
     async function getTopStoriesBBC() {
 
-        await GlobalBBC.collection.drop();
-        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/rss.xml"]);
+        await GlobalWorldBBC.collection.drop();
+        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
+
+        let chuncks = []
         python.stdout.on('data', (data) => {
-            console.log('Pipe data from python script ...');
-            // console.log(`data for stdout + ${data}`);
-            data_received = JSON.parse(`${data}`);
-            data_received["data"].map(async (d, index) => {
+
+            chuncks.push(data);
+        })
+
+
+
+        python.stderr.on('data', (data) => {
+            console.log(` data for stderr + ${data}`);
+        })
+
+        python.on('close', () => {
+            let data = Buffer.concat(chuncks);
+            let result = JSON.parse(data);
+
+            result["data"].map(async (d, index) => {
 
                 await GlobalBBC.create(d).then((response) => {
-                    console.log("created top stories");
-                    // console.log("added ", index, " ", d);
+                    console.log("created");
+                    console.log("added ", index, " ", d);
 
                 }).catch((err) => {
                     console.log("unable to add the data");
                 });
 
             })
-
-        })
-
-        python.stderr.on('data', (data) => {
-            console.log(` data for stderr + ${data}`);
+            console.log("closed cbn");
         })
     }
 
@@ -152,33 +143,44 @@ cronjob.schedule(" */5 * * * *", () => {
 
 })
 
-cronjob.schedule(" */5 * * * *", () => {
+cronjob.schedule(" 0 0 0 * * *", () => {
 
     async function getGlobalWorldBBC() {
 
         await GlobalWorldBBC.collection.drop();
         const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
+
+        let chuncks = []
         python.stdout.on('data', (data) => {
-            console.log('Pipe data from python script ...');
-            // console.log(`data for stdout + ${data}`);
-            data_received = JSON.parse(`${data}`);
-            data_received["data"].map(async (d, index) => {
+
+            chuncks.push(data);
+        })
+
+
+
+        python.stderr.on('data', (data) => {
+            console.log(` data for stderr + ${data}`);
+        })
+
+        python.on('close', () => {
+            let data = Buffer.concat(chuncks);
+            let result = JSON.parse(data);
+            console.log("finally data is  ", result);
+            result["data"].map(async (d, index) => {
 
                 await GlobalBBC.create(d).then((response) => {
-                    console.log("created top stories");
-                    // console.log("added ", index, " ", d);
+                    console.log("created");
+                    console.log("added ", index, " ", d);
 
                 }).catch((err) => {
                     console.log("unable to add the data");
                 });
 
             })
-
+            console.log("closed cbn");
         })
 
-        python.stderr.on('data', (data) => {
-            console.log(` data for stderr + ${data}`);
-        })
+
     }
 
     getGlobalWorldBBC();

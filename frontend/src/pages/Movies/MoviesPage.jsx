@@ -1,36 +1,46 @@
 import React, { useEffect, useState } from "react";
 import "./MoviesPage.css";
 import SimpleDateTime from "react-simple-timestamp-to-date";
+import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 
 const MoviesPage = () => {
+  let navigate = useNavigate();
   const [vueData, setVueData] = useState([]);
   const day = "";
   const [datelists, setDateLists] = useState([]);
+  const [modalData, setModalData] = useState({});
+  const [dateforModal, setDateforModal] = useState("");
 
-  const convertDatetoDay = (e) => {
-    return new Date(e).toDateString();
-
-    // return e.toDateString();
+  const renderdataonModal = (e) => {
+    console.log("rendering ", e);
+    setModalData(e);
+    let alldates = [];
+    Object.keys(e.sessions).map((key) => {
+      console.log("key is ", key);
+      alldates.push(key);
+    });
+    setDateLists(alldates);
   };
 
-  function regroupByDate(jsonArray) {
-    return jsonArray.reduce((grouped, item) => {
-      if (!grouped[item.dateofShow]) {
-        grouped[item.dateofShow] = [];
-      }
-      grouped[item.dateofShow].push(item);
-      // console.log("grouped ", grouped);
+  const setDatefortheModal = (e) => {
+    console.log("date for modal ", e.date);
+    console.log(typeof e.date);
 
-      return [grouped];
-    }, {});
-  }
+    setDateforModal(e.date);
+  };
 
-  // const showModalData = (e) => {
-  //   console.log(e.filmTitle);
-  // };
+  const redirectoBooking = (data) => {
+    let fullurl = "https://" + data;
+    console.log(fullurl);
+    let res = fullurl.replace("vue", "myvue");
+    window.open(res);
+  };
 
   useEffect(() => {
     const getVueData = async () => {
+      console.log("useffect running on every reload ");
+
       await fetch("http://localhost:5000/movies/vue")
         .then((response) => {
           if (response.ok) {
@@ -41,16 +51,6 @@ const MoviesPage = () => {
         .then((jsondata) => {
           setVueData(jsondata.data);
         });
-
-      // vueData.forEach((v) => {
-      //   v["sessions"].forEach((d) => {
-      //     d["dateofShow"] = convertDatetoDay(d["dateofShow"]);
-      //   });
-
-      //   v["sessions"] = regroupByDate(v["sessions"]);
-      // });
-
-      // console.log("final ", vueData[0].sessions);
     };
 
     const getLightsData = async () => {
@@ -66,9 +66,6 @@ const MoviesPage = () => {
     };
 
     getVueData();
-    // vueData.map((d) => {
-    //   console.log("individual data is ");
-    // });
 
     console.log("movie json");
   }, []);
@@ -102,7 +99,10 @@ const MoviesPage = () => {
       <div className="movies">
         <div className="row d-flex">
           {vueData.map((data) => (
-            <div className="vuedatacard col-lg-2 col-md-3 col-sm-6">
+            <div
+              className="vuedatacard col-lg-2 col-md-3 col-sm-6"
+              key={data["_id"]}
+            >
               <div className="movie-card">
                 <img
                   className="card-img-top movie-image"
@@ -110,11 +110,12 @@ const MoviesPage = () => {
                   alt="Card image cap"
                   data-bs-toggle="modal"
                   data-bs-target=".bd-example-modal-lg"
+                  onClick={() => renderdataonModal(data)}
                 />
 
                 <div
                   className="modal fade bd-example-modal-lg"
-                  tabindex="-1"
+                  tabIndex="-1"
                   role="dialog"
                   aria-labelledby="myLargeModalLabel"
                   aria-hidden="true"
@@ -122,7 +123,7 @@ const MoviesPage = () => {
                   <div className="modal-dialog modal-lg">
                     <div className="modal-content">
                       <div className="modal-header">
-                        <h5 className="modal-title">{data.filmTitle}</h5>
+                        <h5 className="modal-title">{modalData.filmTitle}</h5>
                         <button
                           type="button"
                           className="close btn btn-secondary"
@@ -136,20 +137,73 @@ const MoviesPage = () => {
                         <div className="row modaldata">
                           <div className="col-4">
                             <img
-                              src={data["posterImageSrc"]}
+                              src={modalData.posterImageSrc}
                               alt=""
                               className="movie-image-modal"
                             />
                           </div>
                           <div className="col-8">
-                            {data.filmTitle}
+                            {modalData.filmTitle}
                             <hr />
-                            {data.synopsisShort}
+                            {modalData.synopsisShort}
                             <hr />
-                            Duration: {data.duration} minutes
+                            Duration: {modalData.duration} minutes
                             <hr />
-                            Director: {data.director}
+                            Director: {modalData.director}
                             <hr />
+                            <div className="dropdown">
+                              <button
+                                className="btn btn-secondary dropdown-toggle"
+                                type="button"
+                                id="dropdownMenuButton"
+                                data-bs-toggle="dropdown"
+                                aria-haspopup="true"
+                                aria-expanded="false"
+                              >
+                                {dateforModal && <span>{dateforModal}</span>}
+                                {!dateforModal && <span>choose date</span>}
+                              </button>
+                              <div
+                                className="dropdown-menu"
+                                aria-labelledby="dropdownMenuButton"
+                              >
+                                {datelists.map((date) => (
+                                  <a
+                                    href="#"
+                                    className="dropdown-item"
+                                    key={date}
+                                    onClick={() => setDatefortheModal({ date })}
+                                  >
+                                    {date}
+                                  </a>
+                                ))}
+                              </div>
+                              <hr />
+                              <div className="row">
+                                {modalData.sessions?.[dateforModal]?.map(
+                                  (alldata) => (
+                                    <>
+                                      <div className="col-lg-6 col-md-6 col-sm-12">
+                                        <b>{alldata.screenName}</b> -
+                                        {alldata.startTime} - {alldata.endTime}{" "}
+                                        &nbsp;
+                                        <b>Price: </b>
+                                        {alldata.price}
+                                        &nbsp;
+                                        <a
+                                          onClick={() =>
+                                            redirectoBooking(alldata.bookingUrl)
+                                          }
+                                          className="btn btn-primary"
+                                        >
+                                          Book now
+                                        </a>
+                                      </div>
+                                    </>
+                                  )
+                                )}
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

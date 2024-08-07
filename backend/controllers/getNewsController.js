@@ -10,7 +10,7 @@ const GlobalWorldBBC = require("../models/globalWorld");
 
 var response = []
 
-cronjob.schedule(" 0 0 0 * * *", () => {
+cronjob.schedule("0 0 0 * * *", () => {
 
 
 

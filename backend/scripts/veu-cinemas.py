@@ -77,12 +77,11 @@ if response.ok:
         movie_details["posterImageSrc"] = content["posterImageSrc"]
         movie_details["sessions"] = {}
 
-        movie_sessions = []
         for datas in content["showingGroups"]:
 
             # movie_by_date[convertDate(datas["date"])]
             # convertDate(datas["date"])
-
+            movie_sessions = []
             for data in datas["sessions"]:
 
                 movie_session_details = {}
@@ -93,6 +92,7 @@ if response.ok:
                 movie_session_details["bookingUrl"] = vue_url + data["bookingUrl"]
                 movie_session_details["screenName"] = data["screenName"]
                 movie_session_details["dateofShow"] = data["showTimeWithTimeZone"]
+                movie_session_details["price"] = data["formattedPrice"]
                 movie_sessions.append(movie_session_details)
                 movie_session_details = {}
 

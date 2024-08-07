@@ -99,8 +99,8 @@ const LocalNews = () => {
                         <div className="card-body">
                           <h4 className="card-title">{news.title}</h4>
                           <p className="card-text">{news.description}</p>
-                          <a href="#" className="btn btn-primary">
-                            BUTTON
+                          <a href={news.link} className="btn btn-primary">
+                            Learn more
                           </a>
                         </div>
                       </div>

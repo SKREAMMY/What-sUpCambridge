@@ -37,15 +37,15 @@ const TopStories = () => {
                     <div className="card-horizontal row d-flex flex-row">
                       <div className="col-sm-12 col-md-6 col-lg-6">
                         <div className="img-square-wrapper">
-                          <img src={news.mediaThumbnail?.["url"]} alt="" />
+                          <img src={news.mediaThumbnail?.url} alt="" />
                         </div>
                       </div>
                       <div className="col-sm-12 col-md-6 col-lg-6">
                         <div className="card-body">
                           <h4 className="card-title">{news.title}</h4>
                           <p className="card-text">{news.description}</p>
-                          <a href="#" className="btn btn-primary">
-                            BUTTON
+                          <a href={news.link} className="btn btn-primary">
+                            Learn More
                           </a>
                         </div>
                       </div>

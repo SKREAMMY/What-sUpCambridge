@@ -1,10 +1,13 @@
 import React, { useEffect, useState } from "react";
 import "./Header.css";
 import { Link } from "react-router-dom";
+import { searchString } from "../../SearchSlice/searchSlice";
+import { useDispatch } from "react-redux";
 
 const Header = () => {
   // A state to maintain the weather status
   const [weather, setWeather] = useState(0);
+  const dispatch = useDispatch();
 
   // A callback function to get the current weather using OpenWeather API
   const getWeather = async () => {
@@ -28,7 +31,9 @@ const Header = () => {
   };
 
   const handleEvent = (e) => {
-    console.log(e);
+    console.log("calling the dispatch");
+
+    dispatch(searchString(e));
   };
 
   useEffect(() => {

@@ -9,7 +9,8 @@ const localBCCNewsSchema = new mongoose.Schema({
     author: Object,
     category: String,
     enclosure: Object,
-    mediaThumbnail: Object
+    mediaThumbnail: Object,
+    mediaKeywords: String,
 
 
 });

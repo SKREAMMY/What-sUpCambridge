@@ -2,9 +2,13 @@ import React, { useEffect, useState } from "react";
 import TopStories from "./TopStoriesComponent/TopStories";
 import WorldComponent from "./WorldComponent/World";
 import World from "./WorldComponent/World";
+import { useSelector } from "react-redux";
 
 const GlobalNews = () => {
   const [globalNews, setGlobalNews] = useState([]);
+
+  const search = useSelector((state) => state.search);
+  const [filteredresult, setFilteredResult] = useState([]);
 
   useEffect(() => {
     console.log("calling global");

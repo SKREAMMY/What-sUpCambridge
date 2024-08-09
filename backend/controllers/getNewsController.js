@@ -105,7 +105,16 @@ cronjob.schedule(" 0 0 0 * * *", () => {
 
     async function getTopStoriesBBC() {
 
-        await GlobalWorldBBC.collection.drop();
+        await GlobalWorldBBC.collection.drop((err, ok) => {
+            if (err) {
+                console.log("cant delete global world db");
+
+            }
+            if (ok) {
+                console.log("db deleted");
+
+            }
+        });
         const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
 
         let chuncks = []
@@ -126,7 +135,7 @@ cronjob.schedule(" 0 0 0 * * *", () => {
 
             result["data"].map(async (d, index) => {
 
-                await GlobalBBC.create(d).then((response) => {
+                await GlobalWorldBBC.create(d).then((response) => {
                     console.log("created");
                     console.log("added ", index, " ", d);
 
@@ -147,7 +156,16 @@ cronjob.schedule(" 0 0 0 * * *", () => {
 
     async function getGlobalWorldBBC() {
 
-        await GlobalWorldBBC.collection.drop();
+        await GlobalWorldBBC.collection.drop((err, ok) => {
+            if (err) {
+                console.log("cant delete global world db");
+
+            }
+            if (ok) {
+                console.log("db deleted");
+
+            }
+        });
         const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
 
         let chuncks = []

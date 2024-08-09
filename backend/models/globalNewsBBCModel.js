@@ -16,4 +16,4 @@ const globalNewsBBCModel = new mongoose.Schema({
 
 const globalBBC = mongoose.model("GlobalBBC", globalNewsBBCModel)
 
-module.exports = globalBBC;
+module.exports = globalBBC; 

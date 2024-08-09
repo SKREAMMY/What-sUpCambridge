@@ -6,19 +6,23 @@ import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage/HomePage";
 import MoviesPage from "./pages/Movies/MoviesPage";
 import LinksPage from "./pages/Links/LinksPage";
+import { Provider } from "react-redux";
+import { store } from "./Store/Store";
 
 function App() {
   return (
     <>
       <div className="App">
         <Router>
-          <Header />
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/movies" element={<MoviesPage />} />
-            <Route path="/links" element={<LinksPage />} />
-          </Routes>
-          <Footer />
+          <Provider store={store}>
+            <Header />
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/movies" element={<MoviesPage />} />
+              <Route path="/links" element={<LinksPage />} />
+            </Routes>
+            <Footer />
+          </Provider>
         </Router>
       </div>
     </>

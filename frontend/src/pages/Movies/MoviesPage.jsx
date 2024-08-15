@@ -83,7 +83,7 @@ const MoviesPage = () => {
             aria-haspopup="true"
             aria-expanded="false"
           >
-            Click here to choose...
+            Click here to choose....
           </button>
           <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <a href="#" className="dropdown-item">

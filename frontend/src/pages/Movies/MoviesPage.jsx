@@ -73,8 +73,8 @@ const MoviesPage = () => {
   return (
     <>
       <div className="movietype d-flex flex-row">
-        <div>Choose the Cinema Hall &nbsp;</div>
-        <div className="dropdown">
+        {/* <div>Choose the Cinema Hall &nbsp;</div> */}
+        {/* <div className="dropdown">
           <button
             className="btn btn-secondary dropdown-toggle"
             type="button"
@@ -93,7 +93,11 @@ const MoviesPage = () => {
               Lights
             </a>
           </div>
-        </div>
+        </div> */}
+        <span>
+          Displaying all the movies of{" "}
+          <span style={{ fontWeight: "bold" }}> Vue Cinema</span>
+        </span>
       </div>
 
       <div className="movies">

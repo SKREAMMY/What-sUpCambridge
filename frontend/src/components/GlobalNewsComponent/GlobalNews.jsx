@@ -44,7 +44,7 @@ const GlobalNews = () => {
             Top Stories
           </button>
         </li>
-        <li className="nav-item" role="presentation">
+        {/* <li className="nav-item" role="presentation">
           <button
             className="nav-link"
             id="pills-profile-tab"
@@ -113,7 +113,7 @@ const GlobalNews = () => {
           >
             Science
           </button>
-        </li>
+        </li> */}
       </ul>
       <div className="tab-content" id="pills-tabContent">
         <div

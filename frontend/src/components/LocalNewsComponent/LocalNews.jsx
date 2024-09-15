@@ -201,17 +201,14 @@ const LocalNews = () => {
         </div>
 
         <div className="col-sm-12 col-md-3 col-lg-2">
-          <a href="#">Sample links for the next news</a>
+          <h2>Read other</h2>
           <hr />
-          <a href="#">Sample links for the next news</a>
-          <hr />
-          <a href="#">Sample links for the next news</a>
-          <hr />
-          <a href="#">Sample links for the next news</a>
-          <hr />
-          <a href="#">Sample links for the next news</a>
-          <hr />
-          <a href="#">Sample links for the next news</a>
+          {localNews.toReversed().map((news) => (
+            <>
+              <a href={news.link}>{news.title}</a>
+              <hr />
+            </>
+          ))}
         </div>
       </div>
     </div>

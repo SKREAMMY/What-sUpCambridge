@@ -39,11 +39,6 @@ const Header = () => {
   useEffect(() => {
     //Initial call to get the weather status while loading the page
     getWeather();
-
-    //This gets the weather status for every 60 seconds
-    // setInterval(() => {
-    //   getWeather();
-    // }, 60000);
   }, []);
 
   return (

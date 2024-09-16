@@ -5,13 +5,14 @@
 
 .LocalNews {
     margin-bottom: 50px;
+
 }
 
 .img-square-wrapper {
-    height: 300px;
-
-
+    height: 100%;
 }
+
+
 
 .localNewsCard {
     margin-bottom: 20px;
@@ -25,4 +26,16 @@
 .alignCards {
     justify-content: center;
     align-items: center;
+}
+
+.sidebar {
+    background-color: rgb(155, 178, 199);
+    border-radius: 10px;
+}
+
+
+
+.carousel-item-width {
+    width: 100%;
+    border-radius: 10px;
 }

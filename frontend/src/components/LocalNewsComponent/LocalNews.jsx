@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from "react";
 import "./localNews.css";
 import { useSelector } from "react-redux";
+import { Link } from "react-router-dom";
 
 const LocalNews = () => {
   const [localNews, setlocalNews] = useState([]);
 
   const search = useSelector((state) => state.search);
   const [filteredresult, setFilteredResult] = useState([]);
+  const [carousel, setCarousel] = useState([]);
 
   useEffect(() => {
     async function getLocalNewsFunction() {
@@ -20,21 +22,13 @@ const LocalNews = () => {
         .then((json) => {
           console.log(json);
           setlocalNews(json.data);
-
-          // setInterval(() => {}, 2000);
-          // // setlocalNews(localNews.shift());
-          // console.log(localNews);
+          setCarousel(json.data.filter((data, index) => index < 5));
         });
     }
     getLocalNewsFunction();
   }, []);
 
   useEffect(() => {
-    // setFilteredResult(
-    //   // localNews.filter((data) => data.mediaKeywords === "kiran")
-
-    // );
-
     const ConvertToLoweCase = (data) => {
       return data?.toLowerCase();
     };
@@ -63,70 +57,96 @@ const LocalNews = () => {
   return (
     <div className="container-fluid LocalNews">
       <div className="row">
-        <div className="col-sm-12 col-md-8 col-lg-10">
-          {/* <div className="card-group">
-            <div className="card">
-              <img
-                className="card-img-top"
-                src="https://dummyimage.com/286x180/968080/fff.png"
-                alt="Card image cap"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This content is a little bit
-                  longer.
-                </p>
-              </div>
-              <div className="card-footer">
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </div>
+        <div className="col-sm-12 col-md-8 col-lg-9">
+          <div className="row">
+            <div className="col-sm-12 col-md-8 col-lg-9">
+              <>
+                <div
+                  id="carouselExampleCaptions"
+                  class="carousel slide localnewscarousel"
+                  data-bs-ride="carousel"
+                >
+                  <div class="carousel-indicators">
+                    {carousel.map((news, index) => (
+                      <button
+                        type="button"
+                        data-bs-target="#carouselExampleCaptions"
+                        data-bs-slide-to={index}
+                        class="active"
+                        aria-current="true"
+                        aria-label="Slide 1"
+                      ></button>
+                    ))}
+                  </div>
+                  <div class="carousel-inner">
+                    {carousel.map((news, index) => (
+                      <div class="carousel-item  active">
+                        <Link to={news?.link}>
+                          <img
+                            src={news?.enclosure["@url"]}
+                            class="d-block carousel-item-width"
+                            alt="..."
+                            href={news?.link}
+                          />
+                        </Link>
+
+                        <div class="carousel-caption d-none d-md-block">
+                          <h5>{news?.title}</h5>
+                          <p>
+                            Some representative placeholder content for the
+                            first slide.
+                          </p>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                  <button
+                    class="carousel-control-prev"
+                    type="button"
+                    data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="prev"
+                  >
+                    <span
+                      class="carousel-control-prev-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Previous</span>
+                  </button>
+                  <button
+                    class="carousel-control-next"
+                    type="button"
+                    data-bs-target="#carouselExampleCaptions"
+                    data-bs-slide="next"
+                  >
+                    <span
+                      class="carousel-control-next-icon"
+                      aria-hidden="true"
+                    ></span>
+                    <span class="visually-hidden">Next</span>
+                  </button>
+                </div>
+              </>
             </div>
-            <div className="card">
-              <img
-                className="card-img-top"
-                src="https://dummyimage.com/286x180/968080/fff.png"
-                alt="Card image cap"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">
-                  This card has supporting text below as a natural lead-in to
-                  additional content.
-                </p>
-              </div>
-              <div className="card-footer">
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </div>
+            <div className="col-sm-12 col-md-4 col-lg-3">
+              <div>Ad here</div>
             </div>
-            <div className="card">
-              <img
-                className="card-img-top"
-                src="https://dummyimage.com/286x180/968080/fff.png"
-                alt="Card image cap"
-              />
-              <div className="card-body">
-                <h5 className="card-title">Card title</h5>
-                <p className="card-text">
-                  This is a wider card with supporting text below as a natural
-                  lead-in to additional content. This card has even longer
-                  content than the first to show that equal height action.
-                </p>
-              </div>
-              <div className="card-footer">
-                <small className="text-muted">Last updated 3 mins ago</small>
-              </div>
-            </div>
-          </div> */}
+          </div>
 
           <div className="row alignCards">
             {!search && (
               <>
+                {/* {carousel.map((news) => (
+                  <>
+                  </>
+                ))} */}
+
                 {localNews.map((news) => (
                   <>
                     <div className="col-sm-12 col-md-12 col-lg-6">
-                      <div className="card localNewsCard">
+                      <div
+                        className="card localNewsCard card-color"
+                        style={{ backgroundColor: "#113f67" }}
+                      >
                         <div className="card-horizontal row d-flex flex-row alignment">
                           <div className="col-sm-12 col-md-6 col-lg-6 img-square-wrapper">
                             <img
@@ -200,7 +220,7 @@ const LocalNews = () => {
           </div>
         </div>
 
-        <div className="col-sm-12 col-md-3 col-lg-2">
+        <div className="col-sm-12 col-md-3 col-lg-3 sidebar">
           <h2>Read other</h2>
           <hr />
           {localNews.toReversed().map((news) => (

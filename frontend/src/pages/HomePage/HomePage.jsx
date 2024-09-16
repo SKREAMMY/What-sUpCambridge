@@ -8,7 +8,7 @@ const HomePage = () => {
   return (
     <div className="HomePageContainer ">
       <nav className="newsNavBar">
-        <div className="nav nav-tabs" id="nav-tab" role="tablist">
+        <div className="nav nav-tabs nav-colors" id="nav-tab" role="tablist">
           <button
             className="nav-link active"
             id="nav-home-tab"

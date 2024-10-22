@@ -5,28 +5,28 @@ import World from "./WorldComponent/World";
 import { useSelector } from "react-redux";
 
 const GlobalNews = () => {
-  const [globalNews, setGlobalNews] = useState([]);
+  // const [globalNews, setGlobalNews] = useState([]);
 
   const search = useSelector((state) => state.search);
   const [filteredresult, setFilteredResult] = useState([]);
 
-  useEffect(() => {
-    console.log("calling global");
-    async function fetchGlobalNews() {
-      await fetch("http://localhost:5000/news/global/topStories")
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((json) => {
-          // setGlobalNews(json.data);
-          console.log("global news setup", globalNews);
-        });
-    }
+  // useEffect(() => {
+  //   console.log("calling global");
+  //   async function fetchGlobalNews() {
+  //     await fetch("http://localhost:5000/news/global/topStories")
+  //       .then((response) => {
+  //         if (response.ok) {
+  //           return response.json();
+  //         }
+  //       })
+  //       .then((json) => {
+  //         // setGlobalNews(json.data);
+  //         console.log("global news setup", globalNews);
+  //       });
+  //   }
 
-    fetchGlobalNews();
-  }, []);
+  //   fetchGlobalNews();
+  // }, []);
   return (
     <div>
       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">

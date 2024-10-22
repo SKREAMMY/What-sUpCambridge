@@ -31,8 +31,8 @@ const TopStories = () => {
       <div className="row">
         <div className="col-sm-12 col-md-8 col-lg-10">
           <div className="row">
-            {topStories.map((news) => (
-              <>
+            {topStories.map((news, i) => (
+              <div key={i}>
                 <div className="col-sm-12 col-md-12 col-lg-6">
                   <div className="card">
                     <div className="card-horizontal row d-flex flex-row">
@@ -55,7 +55,7 @@ const TopStories = () => {
                     </div>
                   </div>
                 </div>
-              </>
+              </div>
             ))}
           </div>
         </div>

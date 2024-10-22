@@ -43,9 +43,9 @@ const Header = () => {
 
   return (
     <>
-      <nav className="navbar navbar-expand-lg navbar-dark bg-dark">
+      <nav className="navbar navbar-expand-lg navbar-bgcolor">
         {/* <Link to={"/home"}> */}
-        <a className="navbar-brand brandName" href="/">
+        <a className="navbar-brand brandName nav-color" href="/">
           What's up Cambridge
         </a>
         {/* </Link> */}
@@ -70,17 +70,17 @@ const Header = () => {
             >
               <div className="row">
                 <div className="col-4 col-sm-4">
-                  <a className="nav-item nav-link" href="/">
+                  <a className="nav-item nav-link nav-color" href="/">
                     Home
                   </a>
                 </div>
                 <div className="col-4 col-sm-4">
-                  <a className="nav-item nav-link" href="/movies">
+                  <a className="nav-item nav-link nav-color" href="/movies">
                     Movies
                   </a>
                 </div>
                 <div className="col-4 col-sm-4">
-                  <a className="nav-item nav-link" href="/links">
+                  <a className="nav-item nav-link nav-color" href="/links">
                     Links
                   </a>
                 </div>

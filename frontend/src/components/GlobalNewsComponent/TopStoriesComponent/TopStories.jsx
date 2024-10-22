@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 // const cronjob = require("node-cron");
 import "./TopStories.css";
+import { Link } from "react-router-dom";
 
 const TopStories = () => {
   const [topStories, setTopStories] = useState([]);
@@ -27,51 +28,43 @@ const TopStories = () => {
   }, []);
 
   return (
-    <div className="TopStories">
-      <div className="row">
-        <div className="col-sm-12 col-md-8 col-lg-10">
-          <div className="row">
-            {topStories.map((news, i) => (
-              <div key={i}>
-                <div className="col-sm-12 col-md-12 col-lg-6">
-                  <div className="card">
-                    <div className="card-horizontal row d-flex flex-row">
-                      <div className="col-sm-12 col-md-6 col-lg-6 img-square-wrapper">
-                        <img
-                          className="imagesizing"
-                          src={news.mediaThumbnail?.url}
-                          alt=""
-                        />
-                      </div>
-                      <div className="col-sm-12 col-md-6 col-lg-6">
-                        <div className="card-body">
-                          <h4 className="card-title">{news.title}</h4>
-                          <p className="card-text">{news.description}</p>
-                          <a href={news.link} className="btn btn-primary">
-                            Learn More
-                          </a>
-                        </div>
-                      </div>
-                    </div>
+    <div className="container-fluid LocalNews">
+      <div className="row localNewsBody">
+        <div className="row localNewsList">
+          {topStories.slice(15, topStories.length).map((news, i) => (
+            <div className="col-lg-4 col-md-12 col-sm-12 allLocalNews" key={i}>
+              <div className="localNewsImageContainer">
+                <div className="row localImageCard">
+                  <div className="col-6">
+                    <Link to={news?.link} target="_blank">
+                      <img
+                        src={news?.mediaThumbnail["url"]}
+                        alt=""
+                        className="localNewsImage"
+                      />
+                    </Link>
+                  </div>
+                  <div className="col-6">
+                    <a
+                      className="localNewsDescription"
+                      href={news?.link}
+                      target="_blank"
+                    >
+                      {news?.title}
+                    </a>
                   </div>
                 </div>
               </div>
-            ))}
-          </div>
-        </div>
-
-        <div className="col-sm-12 col-md-3 col-lg-2">
-          <h2>Read other</h2>
-          <hr />
-          {topStories.toReversed().map((news) => (
-            <>
-              <a href={news.link}>{news.title}</a>
-              <hr />
-            </>
+            </div>
           ))}
         </div>
       </div>
     </div>
+    // <div>
+    //   {topStories.map((news) => (
+    //     <div>{news.title}</div>
+    //   ))}
+    // </div>
   );
 };
 

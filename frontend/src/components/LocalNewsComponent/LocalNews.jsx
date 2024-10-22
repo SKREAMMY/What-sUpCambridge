@@ -96,7 +96,7 @@ const LocalNews = () => {
 
                 <div className="carouselDescription">
                   <a
-                    className="localNewsDescription"
+                    className="localNewsDescriptionWhite"
                     href={carousel[carouselNumber]?.link}
                     target="_blank"
                   >
@@ -107,7 +107,7 @@ const LocalNews = () => {
             </div>
           </div>
           <div className="col-lg-4 col-sm-12 col-md-12 localNewsCards">
-            {localNews.slice(5, 8).map((news, i) => (
+            {localNews.slice(5, 9).map((news, i) => (
               <div className="localNewsImageContainer" key={i}>
                 <div className="row localImageCard">
                   <div className="col-6">
@@ -134,8 +134,64 @@ const LocalNews = () => {
           </div>
         </div>
         <div className="row localNewsList">
-          {localNews.slice(8, 11).map((news, i) => (
+          {localNews.slice(9, 12).map((news, i) => (
             <div className="col-lg-4 col-md-12 col-sm-12" key={i}>
+              <div className="localNewsImageContainer">
+                <div className="row localImageCard">
+                  <div className="col-6">
+                    <Link to={news?.link} target="_blank">
+                      <img
+                        src={news?.enclosure["@url"]}
+                        alt=""
+                        className="localNewsImage"
+                      />
+                    </Link>
+                  </div>
+                  <div className="col-6">
+                    <a
+                      className="localNewsDescription"
+                      href={news?.link}
+                      target="_blank"
+                    >
+                      {news?.title}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="row localNewsListmid">
+          {localNews.slice(13, 15).map((news, i) => (
+            <div className="col-lg-6 col-md-12 col-sm-12" key={i}>
+              <div className="localNewsImageContainer">
+                <div className="row localImageCard">
+                  <div className="col-6">
+                    <Link to={news?.link} target="_blank">
+                      <img
+                        src={news?.enclosure["@url"]}
+                        alt=""
+                        className="localNewsImage"
+                      />
+                    </Link>
+                  </div>
+                  <div className="col-6">
+                    <a
+                      className="localNewsDescriptionWhite"
+                      href={news?.link}
+                      target="_blank"
+                    >
+                      {news?.title}
+                    </a>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+        <div className="row localNewsList">
+          {localNews.slice(15, localNews.length).map((news, i) => (
+            <div className="col-lg-4 col-md-12 col-sm-12 allLocalNews" key={i}>
               <div className="localNewsImageContainer">
                 <div className="row localImageCard">
                   <div className="col-6">

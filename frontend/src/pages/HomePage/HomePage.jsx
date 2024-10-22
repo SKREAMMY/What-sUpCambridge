@@ -19,7 +19,7 @@ const HomePage = () => {
             aria-controls="nav-home"
             aria-selected="true"
           >
-            Local
+            Local News
           </button>
           <button
             className="nav-link"
@@ -31,7 +31,7 @@ const HomePage = () => {
             aria-controls="nav-profile"
             aria-selected="false"
           >
-            Global
+            Global News
           </button>
         </div>
       </nav>

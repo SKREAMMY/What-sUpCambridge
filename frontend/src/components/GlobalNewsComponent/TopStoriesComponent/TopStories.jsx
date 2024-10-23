@@ -7,8 +7,6 @@ const TopStories = () => {
   const [topStories, setTopStories] = useState([]);
 
   useEffect(() => {
-    console.log("inside top stories");
-
     async function fetchGlobalTopStories() {
       await fetch("http://localhost:5000/news/global/world")
         .then((response) => {
@@ -17,10 +15,7 @@ const TopStories = () => {
           }
         })
         .then((json) => {
-          console.log("inside top stories component mame");
-          // console.log("Top Stories ", json);
           setTopStories(json.data);
-          console.log("top stories is ", topStories);
         });
     }
 

@@ -10,10 +10,8 @@ import { Provider } from "react-redux";
 import { store } from "./Store/Store";
 
 const OnPageLoad = ({ open }) => {
-  const handleClose = () => {};
-
   return (
-    <div>
+    <div className="notice">
       ***** Some functionalities are yet to be added as this page is currently
       undergoing development! *****
     </div>
@@ -21,12 +19,10 @@ const OnPageLoad = ({ open }) => {
 };
 
 function App() {
-  const [open, setOpen] = useState(true);
-
   return (
     <>
       <div className="App container">
-        <div className="onPageLoad">{open && <OnPageLoad />}</div>
+        <OnPageLoad />
 
         <Router>
           <Provider store={store}>

@@ -13,20 +13,15 @@ const MoviesPage = () => {
   const [dateforModal, setDateforModal] = useState("");
 
   const renderdataonModal = (e) => {
-    console.log("rendering ", e);
     setModalData(e);
     let alldates = [];
     Object.keys(e.sessions).map((key) => {
-      console.log("key is ", key);
       alldates.push(key);
     });
     setDateLists(alldates);
   };
 
   const setDatefortheModal = (e) => {
-    console.log("date for modal ", e.date);
-    console.log(typeof e.date);
-
     setDateforModal(e.date);
   };
 
@@ -39,12 +34,9 @@ const MoviesPage = () => {
 
   useEffect(() => {
     const getVueData = async () => {
-      console.log("useffect running on every reload ");
-
       await fetch("http://localhost:5000/movies/vue")
         .then((response) => {
           if (response.ok) {
-            console.log("reponse for movies is ", response.status);
             return response.json();
           }
         })
@@ -53,47 +45,12 @@ const MoviesPage = () => {
         });
     };
 
-    const getLightsData = async () => {
-      await fetch("http://localhost:5000/movies/lights")
-        .then((response) => {
-          if (response.ok) {
-            return response.json();
-          }
-        })
-        .then((jsondata) => {
-          console.log("lights data ", jsondata);
-        });
-    };
-
     getVueData();
-
-    console.log("movie json");
   }, []);
 
   return (
     <>
       <div className="movietype d-flex flex-row">
-        {/* <div>Choose the Cinema Hall &nbsp;</div> */}
-        {/* <div className="dropdown">
-          <button
-            className="btn btn-secondary dropdown-toggle"
-            type="button"
-            id="dropdownMenuButton"
-            data-bs-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false"
-          >
-            Click here to choose....
-          </button>
-          <div className="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <a href="#" className="dropdown-item">
-              Vue
-            </a>
-            <a href="#" className="dropdown-item">
-              Lights
-            </a>
-          </div>
-        </div> */}
         <div className="cinemaInfo">
           Displaying all the movies of{" "}
           <span style={{ fontWeight: "bold" }}> Vue Cinema</span>

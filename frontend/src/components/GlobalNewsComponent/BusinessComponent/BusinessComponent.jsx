@@ -6,8 +6,6 @@ const BusinessComponent = () => {
   const [business, setBusiness] = useState([]);
 
   useEffect(() => {
-    console.log("inside top stories");
-
     async function fetchGlobalBusiness() {
       await fetch("http://localhost:5000/news/global/business")
         .then((response) => {
@@ -16,10 +14,7 @@ const BusinessComponent = () => {
           }
         })
         .then((json) => {
-          console.log("inside top stories component mame");
-          // console.log("Top Stories ", json);
           setBusiness(json.data);
-          console.log("top stories is ", business);
         });
     }
 

@@ -8,28 +8,6 @@ import HealthComponent from "./HealthComponent/HealthComponent";
 import ScienceComponent from "./ScienceComponent/ScienceComponent";
 
 const GlobalNews = () => {
-  // const [globalNews, setGlobalNews] = useState([]);
-
-  const search = useSelector((state) => state.search);
-  const [filteredresult, setFilteredResult] = useState([]);
-
-  // useEffect(() => {
-  //   console.log("calling global");
-  //   async function fetchGlobalNews() {
-  //     await fetch("http://localhost:5000/news/global/topStories")
-  //       .then((response) => {
-  //         if (response.ok) {
-  //           return response.json();
-  //         }
-  //       })
-  //       .then((json) => {
-  //         // setGlobalNews(json.data);
-  //         console.log("global news setup", globalNews);
-  //       });
-  //   }
-
-  //   fetchGlobalNews();
-  // }, []);
   return (
     <div>
       <ul className="nav nav-pills mb-3" id="pills-tab" role="tablist">
@@ -61,20 +39,7 @@ const GlobalNews = () => {
             World
           </button>
         </li>
-        {/* <li className="nav-item" role="presentation">
-          <button
-            className="nav-link"
-            id="pills-contact-tab"
-            data-bs-toggle="pill"
-            data-bs-target="#pills-uk"
-            type="button"
-            role="tab"
-            aria-controls="pills-contact"
-            aria-selected="false"
-          >
-            UK
-          </button>
-        </li> */}
+
         <li className="nav-item" role="presentation">
           <button
             className="nav-link"
@@ -135,14 +100,7 @@ const GlobalNews = () => {
         >
           <World />
         </div>
-        {/* <div
-          className="tab-pane fade"
-          id="pills-uk"
-          role="tabpanel"
-          aria-labelledby="pills-contact-tab"
-        >
-          UK
-        </div> */}
+
         <div
           className="tab-pane fade"
           id="pills-business"

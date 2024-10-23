@@ -32,8 +32,6 @@ const Header = () => {
   };
 
   const handleEvent = (e) => {
-    console.log("calling the dispatch");
-
     dispatch(searchString(e));
   };
 

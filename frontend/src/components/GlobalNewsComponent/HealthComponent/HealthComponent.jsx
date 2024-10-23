@@ -5,8 +5,6 @@ const HealthComponent = () => {
   const [health, setHealth] = useState([]);
 
   useEffect(() => {
-    console.log("inside top stories");
-
     async function fetchGlobalHealth() {
       await fetch("http://localhost:5000/news/global/health")
         .then((response) => {
@@ -15,10 +13,7 @@ const HealthComponent = () => {
           }
         })
         .then((json) => {
-          console.log("inside top stories component mame");
-          // console.log("Top Stories ", json);
           setHealth(json.data);
-          console.log("top stories is ", health);
         });
     }
 

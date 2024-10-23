@@ -13,7 +13,6 @@ const LocalNews = () => {
 
   useEffect(() => {
     async function getLocalNewsFunction() {
-      console.log("inside local ");
       await fetch("http://localhost:5000/news/local")
         .then((response) => {
           if (response.ok) {
@@ -21,7 +20,6 @@ const LocalNews = () => {
           }
         })
         .then((json) => {
-          console.log(json);
           setlocalNews(json.data);
           setCarousel(json.data.filter((data, index) => index < 5));
         });
@@ -52,7 +50,6 @@ const LocalNews = () => {
       }
     });
     setFilteredResult(tempdata);
-    console.log(filteredresult);
   }, [search]);
 
   function increaseCarouselNumber() {

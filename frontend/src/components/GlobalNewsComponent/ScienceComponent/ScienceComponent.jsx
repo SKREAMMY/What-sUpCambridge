@@ -6,8 +6,6 @@ const ScienceComponent = () => {
   const [science, setScience] = useState([]);
 
   useEffect(() => {
-    console.log("inside science");
-
     async function fetchGlobalHealth() {
       await fetch("http://localhost:5000/news/global/science")
         .then((response) => {
@@ -16,10 +14,7 @@ const ScienceComponent = () => {
           }
         })
         .then((json) => {
-          console.log("inside top stories component mame");
-          // console.log("Top Stories ", json);
           setScience(json.data);
-          console.log("science is ", science);
         });
     }
 

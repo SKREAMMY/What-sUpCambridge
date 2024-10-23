@@ -2,7 +2,15 @@
     margin-left: 20px;
 }
 
-* {}
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+
+.searchInput {
+    width: 100%;
+}
 
 .loginButton {
     margin-right: 5px;

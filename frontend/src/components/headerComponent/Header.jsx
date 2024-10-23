@@ -13,6 +13,7 @@ const Header = () => {
   const getWeather = async () => {
     try {
       // variables are imported from .env file
+
       await fetch(
         import.meta.env.VITE_APP_WEATHER_URL +
           import.meta.env.VITE_APP_WEATHER_API
@@ -68,18 +69,18 @@ const Header = () => {
                         align-items-center 
                         justify-content-center"
             >
-              <div className="row">
-                <div className="col-4 col-sm-4">
+              <div className="row navbarContent">
+                <div className="col-4">
                   <a className="nav-item nav-link nav-color" href="/">
                     Home
                   </a>
                 </div>
-                <div className="col-4 col-sm-4">
+                <div className="col-4">
                   <a className="nav-item nav-link nav-color" href="/movies">
                     Movies
                   </a>
                 </div>
-                <div className="col-4 col-sm-4">
+                <div className="col-4">
                   <a className="nav-item nav-link nav-color" href="/links">
                     Links
                   </a>
@@ -87,11 +88,7 @@ const Header = () => {
               </div>
             </div>
 
-            <div
-              className="col-lg-4 col-md-4 col-sm-12 d-flex 
-                        align-items-center 
-                        "
-            >
+            <div className="searchInput col-lg-4 col-md-8 col-sm-10 ">
               <div className="input-group">
                 <input
                   type="text"

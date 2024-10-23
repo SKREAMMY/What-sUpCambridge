@@ -13,7 +13,7 @@ const GlobalScienceBBC = require("../models/globalScience");
 
 var response = []
 
-cronjob.schedule("0 0 0 * * *", () => {
+cronjob.schedule("0 * * * *", () => {
 
 
 
@@ -104,58 +104,58 @@ cronjob.schedule("0 0 0 * * *", () => {
 
 })
 
-cronjob.schedule(" 0 0 0 * * *", () => {
+// cronjob.schedule(" 0 0 0 * * *", () => {
 
-    async function getTopStoriesBBC() {
+//     async function getTopStoriesBBC() {
 
-        await GlobalWorldBBC.collection.drop((err, ok) => {
-            if (err) {
-                console.log("cant delete global world db");
+//         await GlobalWorldBBC.collection.drop((err, ok) => {
+//             if (err) {
+//                 console.log("cant delete global world db");
 
-            }
-            if (ok) {
-                console.log("db deleted");
+//             }
+//             if (ok) {
+//                 console.log("db deleted");
 
-            }
-        });
-        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
+//             }
+//         });
+//         const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
 
-        let chuncks = []
-        python.stdout.on('data', (data) => {
+//         let chuncks = []
+//         python.stdout.on('data', (data) => {
 
-            chuncks.push(data);
-        })
+//             chuncks.push(data);
+//         })
 
 
 
-        python.stderr.on('data', (data) => {
-            console.log(` data for stderr + ${data}`);
-        })
+//         python.stderr.on('data', (data) => {
+//             console.log(` data for stderr + ${data}`);
+//         })
 
-        python.on('close', () => {
-            let data = Buffer.concat(chuncks);
-            let result = JSON.parse(data);
+//         python.on('close', () => {
+//             let data = Buffer.concat(chuncks);
+//             let result = JSON.parse(data);
 
-            result["data"].map(async (d, index) => {
+//             result["data"].map(async (d, index) => {
 
-                await GlobalWorldBBC.create(d).then((response) => {
-                    console.log("created");
-                    console.log("added ", index, " ", d);
+//                 await GlobalWorldBBC.create(d).then((response) => {
+//                     console.log("created");
+//                     console.log("added ", index, " ", d);
 
-                }).catch((err) => {
-                    console.log("unable to add the data");
-                });
+//                 }).catch((err) => {
+//                     console.log("unable to add the data");
+//                 });
 
-            })
-            console.log("closed cbn");
-        })
-    }
+//             })
+//             console.log("closed cbn");
+//         })
+//     }
 
-    getTopStoriesBBC();
+//     getTopStoriesBBC();
 
-})
+// })
 
-cronjob.schedule(" 0 0 0 * * * ", () => {
+cronjob.schedule(" 0 * * * * ", () => {
 
     async function getGlobalDataBBC(database, url) {
 

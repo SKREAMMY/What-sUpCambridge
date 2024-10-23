@@ -1,3 +1,11 @@
 .App {
   overflow: hidden;
 }
+
+.onPageLoad {
+  background-color: darkslategray;
+  display: flex;
+  justify-content: center;
+  color: white;
+  word-spacing: 0.5rem;
+}

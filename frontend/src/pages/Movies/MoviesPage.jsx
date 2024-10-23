@@ -94,17 +94,17 @@ const MoviesPage = () => {
             </a>
           </div>
         </div> */}
-        <span>
+        <div className="cinemaInfo">
           Displaying all the movies of{" "}
           <span style={{ fontWeight: "bold" }}> Vue Cinema</span>
-        </span>
+        </div>
       </div>
 
       <div className="movies">
-        <div className="row d-flex">
+        <div className="row">
           {vueData.map((data) => (
             <div
-              className="vuedatacard col-lg-2 col-md-3 col-sm-6"
+              className="vuedatacard col-lg-3 col-md-6 col-sm-6"
               key={data["_id"]}
             >
               <div className="movie-card">
@@ -139,16 +139,14 @@ const MoviesPage = () => {
                       </div>
                       <div className="modal-body">
                         <div className="row modaldata">
-                          <div className="col-4">
+                          <div className="col-4 modalImage">
                             <img
                               src={modalData.posterImageSrc}
                               alt=""
                               className="movie-image-modal"
                             />
                           </div>
-                          <div className="col-8">
-                            {modalData.filmTitle}
-                            <hr />
+                          <div className="col-8 modalDescription">
                             {modalData.synopsisShort}
                             <hr />
                             Duration: {modalData.duration} minutes

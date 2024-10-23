@@ -9,10 +9,25 @@ import LinksPage from "./pages/Links/LinksPage";
 import { Provider } from "react-redux";
 import { store } from "./Store/Store";
 
+const OnPageLoad = ({ open }) => {
+  const handleClose = () => {};
+
+  return (
+    <div>
+      ***** Some functionalities are yet to be added as this page is currently
+      undergoing development! *****
+    </div>
+  );
+};
+
 function App() {
+  const [open, setOpen] = useState(true);
+
   return (
     <>
-      <div className="App ">
+      <div className="App container">
+        <div className="onPageLoad">{open && <OnPageLoad />}</div>
+
         <Router>
           <Provider store={store}>
             <Header />

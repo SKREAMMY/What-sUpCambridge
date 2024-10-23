@@ -14,6 +14,6 @@ const globalNewsBBCModel = new mongoose.Schema({
     mediaThumbnail: Object
 })
 
-const globalBBC = mongoose.model("GlobalBBC", globalNewsBBCModel)
+const GlobalTopStoriesBBC = mongoose.model("GlobalBBC", globalNewsBBCModel)
 
-module.exports = globalBBC; 
+module.exports = GlobalTopStoriesBBC; 

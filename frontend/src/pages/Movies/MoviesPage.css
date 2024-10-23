@@ -1,53 +1,66 @@
-.movietype {
-    align-items: center;
+.cinemaInfo {
+    margin: 20px 0px 20px 0px;
+}
+
+
+.movie-image {
+    width: 30vw;
+    height: 60vh;
 
 }
 
 .movie-card {
-    width: 18rem;
-    background-color: rgb(183, 201, 126);
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    /* background-color: darkslategray; */
+    margin-bottom: 30px;
     border-radius: 10px;
+    color: black;
+
+}
+
+.modal-header {
+    display: flex;
+    justify-content: space-between;
+    color: darkslategray;
+    font-size: 400px;
+
+}
+
+.modalDescription {
+    color: black;
+}
+
+.card-title {
+    padding-bottom: 20px;
     padding-top: 10px;
-    height: 480px;
-    cursor: pointer;
-
-}
-
-.card-body {
-    font-size: 20px;
+    padding-left: 10px;
     align-items: center;
     justify-content: center;
-    text-align: center;
-    /* font-family: fantasy; */
-
+    font-size: 30px;
 }
 
-.movie-image {
-    width: 280px;
-    height: 400px;
-
+.movie-card img {
+    object-fit: cover;
+    padding: 5px;
 }
 
-.movie-image-modal {
-    width: 240px;
-    height: 350px;
-
+.modal-title {
+    font-size: 30px;
 }
 
-.vuedatacard {
-    margin: 20px;
-}
-
-.bookingbutton {
+.modalImage img {
     width: 100%;
-    align-items: center;
-    justify-content: center;
 }
 
-.movietype {
-    margin: 20px;
+.modal-header button {
+    justify-content: flex-end;
 }
 
-.movies {
-    padding-bottom: 50px;
+@media screen and (max-width: 768px) {
+    .movie-card img {
+        object-fit: contain;
+    }
 }

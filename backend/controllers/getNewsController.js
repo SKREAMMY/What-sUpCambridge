@@ -5,12 +5,15 @@ const cronjob = require('node-cron')
 // const sys = require('sys')
 
 const LocalBBC = require("../models/localNewsBBCModel");
-const GlobalBBC = require("../models/globalNewsBBCModel");
+const GlobalTopStoriesBBC = require("../models/globalNewsBBCModel");
 const GlobalWorldBBC = require("../models/globalWorld");
+const GlobalBusinessBBC = require("../models/globalBusiness");
+const GlobalHealthBBC = require("../models/globalHealth");
+const GlobalScienceBBC = require("../models/globalScience");
 
 var response = []
 
-cronjob.schedule("0 0 0 * * *", () => {
+cronjob.schedule("0 * * * *", () => {
 
 
 
@@ -101,11 +104,62 @@ cronjob.schedule("0 0 0 * * *", () => {
 
 })
 
-cronjob.schedule(" 0 0 0 * * *", () => {
+// cronjob.schedule(" 0 0 0 * * *", () => {
 
-    async function getTopStoriesBBC() {
+//     async function getTopStoriesBBC() {
 
-        await GlobalWorldBBC.collection.drop((err, ok) => {
+//         await GlobalWorldBBC.collection.drop((err, ok) => {
+//             if (err) {
+//                 console.log("cant delete global world db");
+
+//             }
+//             if (ok) {
+//                 console.log("db deleted");
+
+//             }
+//         });
+//         const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
+
+//         let chuncks = []
+//         python.stdout.on('data', (data) => {
+
+//             chuncks.push(data);
+//         })
+
+
+
+//         python.stderr.on('data', (data) => {
+//             console.log(` data for stderr + ${data}`);
+//         })
+
+//         python.on('close', () => {
+//             let data = Buffer.concat(chuncks);
+//             let result = JSON.parse(data);
+
+//             result["data"].map(async (d, index) => {
+
+//                 await GlobalWorldBBC.create(d).then((response) => {
+//                     console.log("created");
+//                     console.log("added ", index, " ", d);
+
+//                 }).catch((err) => {
+//                     console.log("unable to add the data");
+//                 });
+
+//             })
+//             console.log("closed cbn");
+//         })
+//     }
+
+//     getTopStoriesBBC();
+
+// })
+
+cronjob.schedule(" 0 * * * * ", () => {
+
+    async function getGlobalDataBBC(database, url) {
+
+        await database.collection.drop((err, ok) => {
             if (err) {
                 console.log("cant delete global world db");
 
@@ -115,58 +169,7 @@ cronjob.schedule(" 0 0 0 * * *", () => {
 
             }
         });
-        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
-
-        let chuncks = []
-        python.stdout.on('data', (data) => {
-
-            chuncks.push(data);
-        })
-
-
-
-        python.stderr.on('data', (data) => {
-            console.log(` data for stderr + ${data}`);
-        })
-
-        python.on('close', () => {
-            let data = Buffer.concat(chuncks);
-            let result = JSON.parse(data);
-
-            result["data"].map(async (d, index) => {
-
-                await GlobalWorldBBC.create(d).then((response) => {
-                    console.log("created");
-                    console.log("added ", index, " ", d);
-
-                }).catch((err) => {
-                    console.log("unable to add the data");
-                });
-
-            })
-            console.log("closed cbn");
-        })
-    }
-
-    getTopStoriesBBC();
-
-})
-
-cronjob.schedule(" 0 0 0 * * *", () => {
-
-    async function getGlobalWorldBBC() {
-
-        await GlobalWorldBBC.collection.drop((err, ok) => {
-            if (err) {
-                console.log("cant delete global world db");
-
-            }
-            if (ok) {
-                console.log("db deleted");
-
-            }
-        });
-        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', "https://feeds.bbci.co.uk/news/world/rss.xml"]);
+        const python = await spawn('python', ['./scripts/convertBBCXmltoJson.py', url]);
 
         let chuncks = []
         python.stdout.on('data', (data) => {
@@ -186,7 +189,7 @@ cronjob.schedule(" 0 0 0 * * *", () => {
             console.log("finally data is  ", result);
             result["data"].map(async (d, index) => {
 
-                await GlobalBBC.create(d).then((response) => {
+                await database.create(d).then((response) => {
                     console.log("created");
                     console.log("added ", index, " ", d);
 
@@ -201,7 +204,11 @@ cronjob.schedule(" 0 0 0 * * *", () => {
 
     }
 
-    getGlobalWorldBBC();
+    getGlobalDataBBC(GlobalTopStoriesBBC, "https://feeds.bbci.co.uk/news/rss.xml");
+    getGlobalDataBBC(GlobalWorldBBC, "https://feeds.bbci.co.uk/news/world/rss.xml");
+    getGlobalDataBBC(GlobalBusinessBBC, "https://feeds.bbci.co.uk/news/business/rss.xml");
+    getGlobalDataBBC(GlobalHealthBBC, "https://feeds.bbci.co.uk/news/health/rss.xml");
+    getGlobalDataBBC(GlobalScienceBBC, "https://feeds.bbci.co.uk/news/science_and_environment/rss.xml");
 
 })
 
@@ -216,12 +223,26 @@ getGlobalNews = async (req, res, next) => {
     let resultdata;
     console.log(req.params["newsType"]);
     switch (req.params["newsType"]) {
-        case "topStories":
+        case "world":
             urlForRssXml = "https://feeds.bbci.co.uk/news/rss.xml";
-            resultdata = await GlobalBBC.find({});
+            resultdata = await GlobalWorldBBC.find({});
             console.log(urlForRssXml);
 
             break;
+
+        case "topStories":
+            resultdata = await GlobalTopStoriesBBC.find({});
+            break;
+        case "business":
+            resultdata = await GlobalBusinessBBC.find({});
+            break;
+        case "health":
+            resultdata = await GlobalHealthBBC.find({});
+            break;
+        case "science":
+            resultdata = await GlobalScienceBBC.find({});
+            break;
+
 
         default:
             console.log("no such route");

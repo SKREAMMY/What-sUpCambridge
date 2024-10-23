@@ -1,37 +1,35 @@
 import React from "react";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
-
-const World = () => {
-  const [worldStories, setWorldStories] = useState([]);
+const HealthComponent = () => {
+  const [health, setHealth] = useState([]);
 
   useEffect(() => {
-    console.log("inside worldStories");
+    console.log("inside top stories");
 
-    async function fetchGlobalTopStories() {
-      await fetch("http://localhost:5000/news/global/world")
+    async function fetchGlobalHealth() {
+      await fetch("http://localhost:5000/news/global/health")
         .then((response) => {
           if (response.ok) {
             return response.json();
           }
         })
         .then((json) => {
-          console.log("inside worldStories component");
+          console.log("inside top stories component mame");
           // console.log("Top Stories ", json);
-          setWorldStories(json.data);
-          console.log("worldStories is  ", worldStories);
+          setHealth(json.data);
+          console.log("top stories is ", health);
         });
     }
 
-    fetchGlobalTopStories();
+    fetchGlobalHealth();
   }, []);
-
   return (
     <div>
       <div className="container-fluid LocalNews">
         <div className="row localNewsBody">
           <div className="row localNewsList">
-            {worldStories.map((news, i) => (
+            {health.map((news, i) => (
               <div
                 className="col-lg-4 col-md-12 col-sm-12 allLocalNews"
                 key={i}
@@ -67,4 +65,4 @@ const World = () => {
   );
 };
 
-export default World;
+export default HealthComponent;

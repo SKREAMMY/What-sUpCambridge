@@ -2,6 +2,16 @@
     margin-left: 20px;
 }
 
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+
+
+.searchInput {
+    width: 100%;
+}
+
 .loginButton {
     margin-right: 5px;
 }
@@ -31,4 +41,12 @@
 
 .input-group {
     width: auto;
+}
+
+.navbar-bgcolor {
+    background-color: rgb(72, 72, 72);
+}
+
+.nav-color {
+    color: white !important;
 }

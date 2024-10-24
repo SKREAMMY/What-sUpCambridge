@@ -45,6 +45,18 @@ const MoviesPage = () => {
         });
     };
 
+    const getLightsData = async () => {
+      await fetch("http://localhost:5000/movies/lights")
+        .then((response) => {
+          if (response.ok) {
+            return response.json();
+          }
+        })
+        .then((jsondata) => {
+          console.log("lights data ", jsondata);
+        });
+    };
+
     getVueData();
   }, []);
 

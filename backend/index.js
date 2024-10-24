@@ -6,6 +6,7 @@ const path = require("path")
 const cronjob = require("node-cron")
 const connectDatabase = require("./config/connectDB")
 const LocalBBC = require("./models/localNewsBBCModel")
+const options = require("./config/allowedOrigins");
 
 dotenv.config({
     path: path.join(__dirname, 'config', 'config.env')
@@ -17,7 +18,7 @@ connectDatabase();
 
 
 app.use(express.json())
-app.use(cors())
+app.use(cors(options))
 
 
 const news = require("./routes/getNews");
@@ -38,6 +39,8 @@ app.post("/api/products", async (req, res) => {
 
 });
 
+const port = process.env.PORT || 5000;
+
 app.listen(process.env.PORT, () => {
-    console.log(`App is listening at port ${process.env.PORT}...`);
+    console.log(`App is listening at port ${port}...`);
 })

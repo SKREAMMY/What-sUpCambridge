@@ -6,7 +6,7 @@ const HealthComponent = () => {
 
   useEffect(() => {
     async function fetchGlobalHealth() {
-      await fetch("http://localhost:5000/news/global/health")
+      await fetch(import.meta.env.VITE_APP_BASEURL + "news/global/health")
         .then((response) => {
           if (response.ok) {
             return response.json();

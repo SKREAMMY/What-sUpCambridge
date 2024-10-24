@@ -7,7 +7,7 @@ const World = () => {
 
   useEffect(() => {
     async function fetchGlobalTopStories() {
-      await fetch("http://localhost:5000/news/global/world")
+      await fetch(import.meta.env.VITE_APP_BASEURL + "news/global/world")
         .then((response) => {
           if (response.ok) {
             return response.json();

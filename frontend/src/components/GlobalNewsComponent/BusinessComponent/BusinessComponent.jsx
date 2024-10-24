@@ -7,7 +7,7 @@ const BusinessComponent = () => {
 
   useEffect(() => {
     async function fetchGlobalBusiness() {
-      await fetch("http://localhost:5000/news/global/business")
+      await fetch(import.meta.env.VITE_APP_BASEURL + "news/global/business")
         .then((response) => {
           if (response.ok) {
             return response.json();

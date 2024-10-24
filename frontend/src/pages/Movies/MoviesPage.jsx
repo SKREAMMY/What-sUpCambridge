@@ -34,7 +34,7 @@ const MoviesPage = () => {
 
   useEffect(() => {
     const getVueData = async () => {
-      await fetch("http://localhost:5000/movies/vue")
+      await fetch(import.meta.env.VITE_APP_BASEURL + "movies/vue")
         .then((response) => {
           if (response.ok) {
             return response.json();
@@ -46,7 +46,7 @@ const MoviesPage = () => {
     };
 
     const getLightsData = async () => {
-      await fetch("http://localhost:5000/movies/lights")
+      await fetch(import.meta.env.VITE_APP_BASEURL + "movies/lights")
         .then((response) => {
           if (response.ok) {
             return response.json();

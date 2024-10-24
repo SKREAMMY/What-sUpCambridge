@@ -12,8 +12,10 @@ import { store } from "./Store/Store";
 const OnPageLoad = ({ open }) => {
   return (
     <div className="notice">
-      ***** Some functionalities are yet to be added as this page is currently
-      undergoing development! *****
+      <span>
+        ***** Some functionalities are yet to be added as this page is currently
+        undergoing development. Thank you for understanding! *****
+      </span>
     </div>
   );
 };

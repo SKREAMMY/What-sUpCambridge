@@ -13,7 +13,7 @@ const LocalNews = () => {
 
   useEffect(() => {
     async function getLocalNewsFunction() {
-      await fetch("http://localhost:5000/news/local")
+      await fetch(import.meta.env.VITE_APP_BASEURL + "news/local")
         .then((response) => {
           if (response.ok) {
             return response.json();
